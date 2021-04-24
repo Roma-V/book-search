@@ -1,15 +1,16 @@
 import React from 'react'
 
+import BookListItem from './BookListItem'
+
 const BookList = ({ bookList }) => {
   return (
     <ul className="list-container">
-      {bookList && bookList.map(({ id, name }) => (
-        <li key={id} className="list-item" style={{ backgroundImage: `url(${`${id}.png`})` }}>
-          <p className="list-item-name" >
-            {name}
-          </p>
-        </li>
-      ))}
+      {
+        bookList 
+        && bookList.map(({ key, title, author_name, cover_i }) => 
+          <BookListItem key={key} title={title} authors={author_name} coverId={cover_i} />
+        )
+      }
     </ul>
   )
 }

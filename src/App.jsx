@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 // import { useApi } from './useApi'
 // import LoadingSpinner from './LoadingSpinner'
 // import ErrorMessage from './ErrorMessage'
@@ -12,6 +12,12 @@ import BookList from './components/BookList'
 // })))
 
 const App = () => {
+  const [books, setBooks] = useState([])
+
+  function handleBooksFound(books) {
+    console.log('books found:', books)
+    setBooks(books)
+  }
   //   const { data: pokemonList, error, isLoading } = useApi('https://pokeapi.co/api/v2/pokemon/?limit=784', mapResults)
   //   if (isLoading) {
   //     return <LoadingSpinner />
@@ -23,8 +29,8 @@ const App = () => {
   return (
     <React.Fragment>
       <h1>Book search</h1>
-      <SearchForm />
-      <BookList />
+      <SearchForm booksFound={handleBooksFound} />
+      <BookList bookList={books} />
     </React.Fragment>
   )
 }
