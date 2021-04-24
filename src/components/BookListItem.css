@@ -2,13 +2,13 @@
     display: block;
     min-height: 58px;
     margin: 1em auto;
-    border: 1px solid silver;
-    border-radius: 0.5em;
+    border-bottom: 1px solid rgb(211, 210, 210);
     padding: 1em;
 }
 
 .list-item:hover {
-    box-shadow: 0 0 10px 0 silver;
+    border-radius: 0.5em;
+    background-color: rgb(247, 247, 247);
     cursor: pointer;
 }
 

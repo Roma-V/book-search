@@ -15,6 +15,18 @@
     height: 100%;
 }
 
+.search-form__input {
+    display: inline-block;
+    padding: 0.8rem 1rem 0.7rem;
+    border: 1px solid silver;
+    border-radius: 0;
+    margin: 0 0.5em;
+    height: 100%;
+}
+.search-form__input:focus {
+    outline: 2px dotted #ec9b22;
+}
+
 .search-form__btn {
     padding: 0.8rem 1rem 0.7rem;
     border: none;

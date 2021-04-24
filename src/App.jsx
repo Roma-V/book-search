@@ -19,6 +19,10 @@ const App = () => {
   function handleBooksFound(books) {
     setBooks(books)
   }
+
+  function toggleModal(book) {
+    console.log('toggle modal view with book:', book)
+  }
   //   const { data: pokemonList, error, isLoading } = useApi('https://pokeapi.co/api/v2/pokemon/?limit=784', mapResults)
   //   if (isLoading) {
   //     return <LoadingSpinner />
@@ -30,7 +34,7 @@ const App = () => {
   return (
     <React.Fragment>
       <SearchForm booksFound={handleBooksFound} />
-      <BookList bookList={books} />
+      <BookList bookList={books} openModal={toggleModal}/>
     </React.Fragment>
   )
 }

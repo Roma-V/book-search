@@ -4,26 +4,27 @@ import './BookListItem.css'
 
 import openLibrary from '../services/openLibrary'
 
-const BookListItem = ({ title, authors, coverId }) => 
-  <li className="list-item" >
-    <Cover coverId={coverId} />
+const BookListItem = ({ book, openModal }) =>
+  <li className="list-item" onClick={() => openModal(book)}>
+    <Cover coverId={book.cover_i} />
     <h3 className="list-item__title" >
-      {title}
+      {book.title}
     </h3>
-    <p className="list-item__author" >{ authors &&
-          authors.length > 0
-      ? authors.length > 1
-        ? authors.join(', ')
-        : authors
-      : null
-    }</p>
+    <p className="list-item__author" >
+      { book.author_name &&
+        book.author_name.length > 0
+        ? book.author_name.length > 1
+          ? book.author_name.join(', ')
+          : book.author_name
+        : null
+      }</p>
   </li>
 
 const Cover = ({ coverId }) =>
   <React.Fragment>
     {
       coverId
-        ? <img src={`${openLibrary.coverURL}/${coverId}-S.jpg`} className="list-item__image" />
+        ? <img src={openLibrary.coverURL(coverId)} className="list-item__image" />
         : <div className="list-item__noimage">
           No cover<br></br>available
         </div>

@@ -4,13 +4,17 @@ import BookListItem from './BookListItem'
 
 import './BookList.css'
 
-const BookList = ({ bookList }) => {
+const BookList = ({ bookList, openModal }) => {
   return (
     <ul className="list-container">
       {
         bookList
-        && bookList.map(({ key, title, author_name, cover_i }) =>
-          <BookListItem key={key} title={title} authors={author_name} coverId={cover_i} />
+        && bookList.map(book =>
+          <BookListItem
+            key={book.key}
+            book={book}
+            openModal={openModal}
+          />
         )
       }
     </ul>

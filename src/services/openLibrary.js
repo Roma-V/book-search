@@ -1,16 +1,24 @@
 import axios from 'axios'
 const searchURL = 'https://openlibrary.org/search.json'
-const coverURL = 'https://covers.openlibrary.org/b/id'
+const searchParameters = [
+  'title',
+  'author',
+  'subject',
+]
 
-const search = (query) => {
+function coverURL(coverId) {
+  return `https://covers.openlibrary.org/b/id/${coverId}-S.jpg`
+}
+
+const search = (query, parameter = searchParameters[0]) => {
   const request = axios({
     baseURL: searchURL,
     params: {
-      title: query.split(' ').join('+')
+      [parameter]: query.split(' ').join('+')
     },
   })
 
   return request.then(response => response.data)
 }
 
-export default { coverURL, search }
+export default { coverURL, search, searchParameters }
