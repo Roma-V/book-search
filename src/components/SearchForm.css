@@ -1,0 +1,25 @@
+.search-form {
+    display: block;
+}
+
+.search-form__label {
+    display: inline;
+}
+
+.search-form__input {
+    display: inline-block;
+    padding: 0.8rem 1rem 0.7rem;
+    border: 1px solid silver;
+    border-radius: 0;
+    margin: 0 0.5em;
+    height: 100%;
+}
+
+.search-form__btn {
+    padding: 0.8rem 1rem 0.7rem;
+    border: none;
+    cursor: pointer;
+    text-transform: capitalize;
+    color: #fff;
+    background-color: #000;
+}

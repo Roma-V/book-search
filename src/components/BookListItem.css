@@ -1,0 +1,44 @@
+.list-item {
+    display: block;
+    min-height: 58px;
+    margin: 1em auto;
+    border: 1px solid silver;
+    border-radius: 0.5em;
+    padding: 1em;
+}
+
+.list-item:hover {
+    box-shadow: 0 0 10px 0 silver;
+    cursor: pointer;
+}
+
+.list-item__title {
+    margin: 0;
+    font-weight: normal;
+}
+
+.list-item__author {
+    margin: 0;
+    color: gray;
+}
+
+.list-item__image {
+    float: left;
+    margin-right: 15px;
+    height: 58px;
+    background-color: silver;
+    text-align: center;
+}
+
+.list-item__noimage {
+    box-sizing: border-box;
+    float: left;
+    margin-right: 15px;
+    height: 58px;
+    max-width: 58px;
+    padding: 0.5em;
+    border: 1px solid gray;
+    background-color: silver;
+    font-size: 0.5em;
+    text-align: center;
+}

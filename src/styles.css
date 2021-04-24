@@ -1,0 +1,22 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    font-family: Arial, sans-serif;
+}
+
+header, main, footer {
+    padding: 1em;
+}
+
+header {
+    background-color: rgb(255, 217, 0);
+}
+
+main {
+    flex: 1;
+}
+
+footer {
+    text-align: center;
+}

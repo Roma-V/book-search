@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 
-import searchService from '../services/search'
+import openLibrary from '../services/openLibrary'
+
+import './SearchForm.css'
 
 const SearchForm = ({ booksFound }) => {
   const [query, setQuery] = useState('')
@@ -12,26 +14,26 @@ const SearchForm = ({ booksFound }) => {
   function handleSubmit(e) {
     e.preventDefault()
 
-    searchService
+    openLibrary
       .search(query)
       .then(data => booksFound(data.docs))
   }
 
   return (
-    <form onSubmit={handleSubmit} >
-      <label htmlFor="search-query" className="label__lg">
-        Search for:
+    <form className='search-form' onSubmit={handleSubmit} >
+      <label htmlFor="search-query" className="search-form__label">
+        Search for title:
       </label>
       <input
         type="text"
         id="search-query"
-        className="input"
+        className="search-form__input"
         name="search-query"
         autoComplete="off"
         value={query}
         onChange={handleInput}
       />
-      <button type="submit" className="btn">
+      <button type="submit" className="search-form__btn">
         Find
       </button>
     </form>

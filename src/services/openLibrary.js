@@ -1,9 +1,10 @@
 import axios from 'axios'
-const baseURL = 'http://openlibrary.org/search.json'
+const searchURL = 'https://openlibrary.org/search.json'
+const coverURL = 'https://covers.openlibrary.org/b/id'
 
 const search = (query) => {
   const request = axios({
-    baseURL,
+    baseURL: searchURL,
     params: {
       title: query.split(' ').join('+')
     },
@@ -12,4 +13,4 @@ const search = (query) => {
   return request.then(response => response.data)
 }
 
-export default { search }
+export default { coverURL, search }
