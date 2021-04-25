@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useRef } from 'react'
 
 import './BookListItem.css'
 
 import openLibrary from '../services/openLibrary'
 
-const BookListItem = ({ book, openModal }) =>
-  <li className="list-item" onClick={() => openModal(book)}>
+const BookListItem = ({ book, openModal }) => {
+  const itemRef = useRef()
+
+  return <li
+    className="list-item"
+    tabIndex="0"
+    onClick={() => openModal(book, itemRef)}
+    ref={itemRef}
+  >
     <Cover coverId={book.cover_i} />
     <h3 className="list-item__title" >
       {book.title}
@@ -19,6 +26,7 @@ const BookListItem = ({ book, openModal }) =>
         : null
       }</p>
   </li>
+}
 
 const Cover = ({ coverId }) =>
   <React.Fragment>

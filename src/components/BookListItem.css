@@ -6,7 +6,7 @@
     padding: 1em;
 }
 
-.list-item:hover {
+.list-item:hover, .list-item:focus {
     border-radius: 0.5em;
     background-color: rgb(247, 247, 247);
     cursor: pointer;

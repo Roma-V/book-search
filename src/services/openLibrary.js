@@ -6,8 +6,8 @@ const searchParameters = [
   'subject',
 ]
 
-function coverURL(coverId) {
-  return `https://covers.openlibrary.org/b/id/${coverId}-S.jpg`
+function coverURL(coverId, size='S') {
+  return `https://covers.openlibrary.org/b/id/${coverId}-${size}.jpg`
 }
 
 const search = (query, parameter = searchParameters[0]) => {

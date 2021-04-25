@@ -4,37 +4,41 @@ import React, { useState } from 'react'
 // import ErrorMessage from './ErrorMessage'
 import SearchForm from './components/SearchForm'
 import BookList from './components/BookList'
+import ModalView from './components/ModalView'
 
 import './styles.css'
 
-// const mapResults = (({ results }) => results.map(({ url, name }) => ({
-//   url,
-//   name,
-//   id: parseInt(url.match(/\/(\d+)\//)[1])
-// })))
+let lastRef = null
 
 const App = () => {
   const [books, setBooks] = useState([])
+  const [showBookDetails, setShowBookDetails] = useState(null)
+
 
   function handleBooksFound(books) {
     setBooks(books)
   }
 
-  function toggleModal(book) {
-    console.log('toggle modal view with book:', book)
+  function showModal(book, ref) {
+    console.log('show modal view with book:', book)
+    setShowBookDetails(book)
+    document.body.style.overflow = 'hidden'
+    lastRef = ref
   }
-  //   const { data: pokemonList, error, isLoading } = useApi('https://pokeapi.co/api/v2/pokemon/?limit=784', mapResults)
-  //   if (isLoading) {
-  //     return <LoadingSpinner />
-  //   }
-  //   if (error) {
-  //     return <ErrorMessage error={error} />
-  //   }
+
+  function closeModal() {
+    console.log('close modal')
+    setShowBookDetails(null)
+    document.body.style.overflow = 'unset'
+    console.log(lastRef)
+    if (lastRef) lastRef.current.focus()
+  }
 
   return (
     <React.Fragment>
       <SearchForm booksFound={handleBooksFound} />
-      <BookList bookList={books} openModal={toggleModal}/>
+      <BookList bookList={books} openModal={showModal}/>
+      {showBookDetails && <ModalView book={showBookDetails} closeModal={closeModal} />}
     </React.Fragment>
   )
 }

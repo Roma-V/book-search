@@ -1,0 +1,40 @@
+.modal__background {
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.modal__foreground {
+    box-sizing: border-box;
+    z-index: 2000;
+    position: fixed;
+    top: 10%;
+    left: 10%;
+    width: 80vw;
+    max-height: 80vh;
+    background-color: white;
+    padding: 2em;
+    border-radius: 1em;
+    overflow-y: scroll;
+}
+
+.modal__title {
+    margin-top: 0;
+}
+
+.modal__image {
+    min-width: 5em;
+    min-height: 1em;
+    background-color: #fefefe;
+}
+
+.btn__close-modal {
+    margin-top: 1em;
+    position: relative;
+    left: 40%;
+    width: 20%;
+}

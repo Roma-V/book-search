@@ -64,7 +64,7 @@ const SearchForm = ({ booksFound }) => {
         value={input}
         onChange={handleInput}
       />
-      <button type="submit" className="search-form__btn">
+      <button type="submit" className="btn__primary">
         Find
       </button>
     </form>

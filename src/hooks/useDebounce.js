@@ -3,19 +3,15 @@ import { useState, useEffect, useCallback } from 'react'
 export function useDebounce(input, delay) {
   const [newValue, setNewValue] = useState('')
   const memoizedCallback = useCallback(
-    () => {
-      setNewValue(input)
-    },
+    () => setNewValue(input),
     [input],
   )
   const [timerId, setTimerId] = useState(null)
 
   useEffect(() => {
-    if (timerId) {
-      cancelQuery()
-    }
+    if (timerId) cancelQuery()
     setTimerId(setTimeout(memoizedCallback, delay))
-  }, [input, delay])
+  }, [memoizedCallback, delay])
 
   function cancelQuery() {
     clearTimeout(timerId)

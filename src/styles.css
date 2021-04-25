@@ -20,7 +20,7 @@ main {
 footer {
     text-align: center;
     border-top: 1px solid rgb(219, 218, 218);
-    box-shadow: 0 0 10px 0 silver;
+    box-shadow: 0 0 5px 0 silver;
 }
 
 a {
@@ -31,4 +31,16 @@ a {
 
 a:hover, a:active {
     border-bottom: 1px solid rgb(201, 139, 46);
+}
+
+.btn__primary {
+    padding: 0.8rem 1rem 0.7rem;
+    border: none;
+    cursor: pointer;
+    text-transform: capitalize;
+    color: #fff;
+    background-color: #000;
+}
+*:focus {
+    outline: 2px dotted #ec9b22;
 }
