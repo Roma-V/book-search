@@ -29,7 +29,17 @@
 .modal__image {
     min-width: 5em;
     min-height: 1em;
+    margin-right: 1em;
     background-color: #fefefe;
+}
+
+.modal__content {
+    display: flex;
+    flex-direction: row;
+}
+
+.modal__content-text > p:first-of-type {
+    margin-top: 0;
 }
 
 .btn__close-modal {

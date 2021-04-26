@@ -6,18 +6,22 @@ import './BookList.css'
 
 const BookList = ({ bookList, openModal }) => {
   return (
-    <ul className="list-container">
-      {
-        bookList
-        && bookList.map(book =>
-          <BookListItem
-            key={book.key}
-            book={book}
-            openModal={openModal}
-          />
-        )
+    <>
+      {bookList && bookList.length > 0 &&
+      <>
+        <h2>{bookList.length} book{bookList.length === 1 ? '' : 's'} found</h2>
+        <ul className="list-container">
+          {bookList.map(book =>
+            <BookListItem
+              key={book.key}
+              book={book}
+              openModal={openModal}
+            />
+          )}
+        </ul>
+      </>
       }
-    </ul>
+    </>
   )
 }
 

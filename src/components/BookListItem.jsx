@@ -7,10 +7,21 @@ import openLibrary from '../services/openLibrary'
 const BookListItem = ({ book, openModal }) => {
   const itemRef = useRef()
 
+  function handleKey(event) {
+    if (event.isComposing || event.keyCode === 229) {
+      return
+    }
+
+    if (event.key === 'Enter') {
+      openModal(book, itemRef)
+    }
+  }
+
   return <li
     className="list-item"
     tabIndex="0"
     onClick={() => openModal(book, itemRef)}
+    onKeyDown={handleKey}
     ref={itemRef}
   >
     <Cover coverId={book.cover_i} />

@@ -21,23 +21,25 @@ const ModalView = ({ book, closeModal }) => {
           className="modal__image"
           alt={`${book.title} cover image`}
         />}
-        <p className="modal__author" >
-          { book.author_name &&
+        <section className="modal__content-text">
+          <p className="modal__author" >
+            { book.author_name &&
             book.author_name.length > 0
-            ? book.author_name.length > 1
-              ? 'Authors: ' + book.author_name.join(', ')
-              : 'Author: ' + book.author_name
-            : null
-          }</p>
-        <p className="modal__published" >
+              ? book.author_name.length > 1
+                ? 'Authors: ' + book.author_name.join(', ')
+                : 'Author: ' + book.author_name
+              : null
+            }</p>
+          <p className="modal__published" >
           First published: {book.first_publish_year || 'N/A'}
-        </p>
-        <p className="modal__publisher" >
+          </p>
+          <p className="modal__publisher" >
           Has {book.edition_count || 'N/A'} editions.
-        </p>
-        <p className="modal__isbn" >
+          </p>
+          <p className="modal__isbn" >
           ISBN: {(book.isbn && book.isbn[0]) || 'N/A'}
-        </p>
+          </p>
+        </section>
       </section>
       <button
         className="btn__primary btn__close-modal"
@@ -47,7 +49,7 @@ const ModalView = ({ book, closeModal }) => {
         Close
       </button>
     </article>
-    <div className="modal__background">
+    <div className="modal__background" onClick={() => closeModal()}>
     </div>
   </React.Fragment>
 }

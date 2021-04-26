@@ -8,29 +8,26 @@ import ModalView from './components/ModalView'
 
 import './styles.css'
 
-let lastRef = null
+
 
 const App = () => {
   const [books, setBooks] = useState([])
   const [showBookDetails, setShowBookDetails] = useState(null)
-
+  const [lastRef, setLastRef] = useState(null)
 
   function handleBooksFound(books) {
     setBooks(books)
   }
 
   function showModal(book, ref) {
-    console.log('show modal view with book:', book)
     setShowBookDetails(book)
     document.body.style.overflow = 'hidden'
-    lastRef = ref
+    setLastRef(ref)
   }
 
   function closeModal() {
-    console.log('close modal')
     setShowBookDetails(null)
     document.body.style.overflow = 'unset'
-    console.log(lastRef)
     if (lastRef) lastRef.current.focus()
   }
 
