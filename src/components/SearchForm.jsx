@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
 
 import { useDebounce } from '../hooks/useDebounce'
 import openLibrary from '../services/openLibrary'
+import { fetchBooks } from '../store/booksSlice'
 
 import './SearchForm.css'
 
-const SearchForm = ({ booksFound }) => {
+const SearchForm = () => {
   const [input, setInput] = useState('')
   const [query, cancelQuery] = useDebounce(input, 1000)
   const [searchParameter, setSearchParameter] = useState(openLibrary.searchParameters[0])
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
     if (query) {
-      openLibrary
-        .search(query, searchParameter)
-        .then(data => booksFound(data.docs))
+      dispatch(fetchBooks({ query, searchParameter }))
     }
   }, [query])
 
@@ -32,9 +34,7 @@ const SearchForm = ({ booksFound }) => {
 
     cancelQuery()
 
-    openLibrary
-      .search(input, searchParameter)
-      .then(data => booksFound(data.docs))
+    dispatch(fetchBooks({ query: input, searchParameter }))
   }
 
   return (

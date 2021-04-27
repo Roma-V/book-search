@@ -4,10 +4,12 @@ import './ModalView.css'
 
 import openLibrary from '../services/openLibrary'
 
-const ModalView = ({ book, closeModal }) => {
-  const closeButtonRef = useRef()
+const ModalView = ({ book, closeModal, accessible }) => {
+  const elementToFocusRef = useRef()
 
-  useEffect(() => closeButtonRef.current.focus(), [])
+  useEffect(() => {
+    if (accessible) elementToFocusRef.current.focus()
+  }, [])
 
   return <React.Fragment>
     <article className="modal__foreground">
@@ -30,21 +32,23 @@ const ModalView = ({ book, closeModal }) => {
                 : 'Author: ' + book.author_name
               : null
             }</p>
-          <p className="modal__published" >
-          First published: {book.first_publish_year || 'N/A'}
+          <p className="modal__published"
+            tabIndex='-1'
+            ref={elementToFocusRef}
+          >
+            First published: {book.first_publish_year || 'N/A'}
           </p>
           <p className="modal__publisher" >
-          Has {book.edition_count || 'N/A'} editions.
+            Has {book.edition_count || 'N/A'} editions.
           </p>
           <p className="modal__isbn" >
-          ISBN: {(book.isbn && book.isbn[0]) || 'N/A'}
+            ISBN: {(book.isbn && book.isbn[0]) || 'N/A'}
           </p>
         </section>
       </section>
       <button
         className="btn__primary btn__close-modal"
         onClick={() => closeModal()}
-        ref={closeButtonRef}
       >
         Close
       </button>

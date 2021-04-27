@@ -20,7 +20,7 @@ const BookListItem = ({ book, openModal }) => {
   return <li
     className="list-item"
     tabIndex="0"
-    onClick={() => openModal(book, itemRef)}
+    onClick={() => openModal(book)}
     onKeyDown={handleKey}
     ref={itemRef}
   >

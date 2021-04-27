@@ -8,16 +8,9 @@ import ModalView from './components/ModalView'
 
 import './styles.css'
 
-
-
 const App = () => {
-  const [books, setBooks] = useState([])
   const [showBookDetails, setShowBookDetails] = useState(null)
   const [lastRef, setLastRef] = useState(null)
-
-  function handleBooksFound(books) {
-    setBooks(books)
-  }
 
   function showModal(book, ref) {
     setShowBookDetails(book)
@@ -28,14 +21,22 @@ const App = () => {
   function closeModal() {
     setShowBookDetails(null)
     document.body.style.overflow = 'unset'
-    if (lastRef) lastRef.current.focus()
+    if (lastRef) {
+      lastRef.current.focus()
+    }
+    setLastRef(null)
   }
 
   return (
     <React.Fragment>
-      <SearchForm booksFound={handleBooksFound} />
-      <BookList bookList={books} openModal={showModal}/>
-      {showBookDetails && <ModalView book={showBookDetails} closeModal={closeModal} />}
+      <SearchForm />
+      <BookList openModal={showModal}/>
+      {showBookDetails &&
+      <ModalView
+        book={showBookDetails}
+        closeModal={closeModal}
+        accessible={lastRef}
+      />}
     </React.Fragment>
   )
 }
