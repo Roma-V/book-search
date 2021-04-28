@@ -1,13 +1,17 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk, createEntityAdapter } from '@reduxjs/toolkit'
 import openLibrary from '../services/openLibrary'
 
-const initialState = []
+const booksAdapter = createEntityAdapter()
+const initialState = booksAdapter.getInitialState({
+  status: 'idle',
+  error: null,
+})
 
 export const fetchBooks = createAsyncThunk(
   'books/fetchBooks',
   async ({ query, searchParameter }) => {
     const response = await openLibrary.search(query, searchParameter)
-    return response.docs
+    return response.docs.map(book => ({ id: book.key, ...book }))
   })
 
 const booksSlice = createSlice({
@@ -15,15 +19,23 @@ const booksSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
+    [fetchBooks.pending]: (state, action) => {
+      state.status = 'loading'
+    },
     [fetchBooks.fulfilled]: (state, action) => {
-      return action.payload
-    }
+      state.status = 'succeeded'
+      booksAdapter.setAll(state, action.payload)
+    },
+    [fetchBooks.rejected]: (state, action) => {
+      state.status = 'failed'
+      state.error = action.payload
+    },
   }
 })
 
 export default booksSlice.reducer
 
-export const selectAllBooks = state => state.books
-
-export const selectBookById = (state, bookId) =>
-  state.books.find(book => book.id === bookId)
+export const {
+  selectAll: selectAllBooks,
+  selectById: selectBookById,
+} = booksAdapter.getSelectors((state) => state.books)

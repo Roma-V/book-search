@@ -12,8 +12,8 @@ const App = () => {
   const [showBookDetails, setShowBookDetails] = useState(null)
   const [lastRef, setLastRef] = useState(null)
 
-  function showModal(book, ref) {
-    setShowBookDetails(book)
+  function showModal(bookId, ref) {
+    setShowBookDetails(bookId)
     document.body.style.overflow = 'hidden'
     setLastRef(ref)
   }
@@ -33,7 +33,7 @@ const App = () => {
       <BookList openModal={showModal}/>
       {showBookDetails &&
       <ModalView
-        book={showBookDetails}
+        id={showBookDetails}
         closeModal={closeModal}
         accessible={lastRef}
       />}

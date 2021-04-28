@@ -1,15 +1,19 @@
 import React, { useRef, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 import './ModalView.css'
 
+import { selectBookById } from '../store/booksSlice'
 import openLibrary from '../services/openLibrary'
 
-const ModalView = ({ book, closeModal, accessible }) => {
+const ModalView = ({ id, closeModal, accessible }) => {
   const elementToFocusRef = useRef()
 
   useEffect(() => {
     if (accessible) elementToFocusRef.current.focus()
   }, [])
+
+  const book = useSelector(state => selectBookById(state, id))
 
   return <React.Fragment>
     <article className="modal__foreground">

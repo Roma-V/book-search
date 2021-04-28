@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import { useDebounce } from '../hooks/useDebounce'
 import openLibrary from '../services/openLibrary'
@@ -13,6 +13,7 @@ const SearchForm = () => {
   const [searchParameter, setSearchParameter] = useState(openLibrary.searchParameters[0])
 
   const dispatch = useDispatch()
+  const loadingState = useSelector(state => state.books.status)
 
   useEffect(() => {
     if (query) {
@@ -67,6 +68,7 @@ const SearchForm = () => {
       <button type="submit" className="btn__primary">
         Find
       </button>
+      <p>{loadingState}</p>
     </form>
   )
 }

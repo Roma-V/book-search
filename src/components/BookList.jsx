@@ -18,7 +18,7 @@ const BookList = ({ openModal }) => {
         {bookList.map(book =>
           <BookListItem
             key={book.key}
-            book={book}
+            id={book.id}
             openModal={openModal}
           />
         )}

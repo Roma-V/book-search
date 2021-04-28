@@ -1,11 +1,15 @@
 import React, { useRef } from 'react'
+import { useSelector } from 'react-redux'
 
 import './BookListItem.css'
 
 import openLibrary from '../services/openLibrary'
+import { selectBookById } from '../store/booksSlice'
 
-const BookListItem = ({ book, openModal }) => {
+const BookListItem = ({ id, openModal }) => {
   const itemRef = useRef()
+
+  const book = useSelector(state => selectBookById(state, id))
 
   function handleKey(event) {
     if (event.isComposing || event.keyCode === 229) {
@@ -13,14 +17,14 @@ const BookListItem = ({ book, openModal }) => {
     }
 
     if (event.key === 'Enter') {
-      openModal(book, itemRef)
+      openModal(id, itemRef)
     }
   }
 
   return <li
     className="list-item"
     tabIndex="0"
-    onClick={() => openModal(book)}
+    onClick={() => openModal(id)}
     onKeyDown={handleKey}
     ref={itemRef}
   >
