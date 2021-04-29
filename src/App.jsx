@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 // import LoadingSpinner from './LoadingSpinner'
 // import ErrorMessage from './ErrorMessage'
 import SearchForm from './components/SearchForm'
+import Notification from './components/Notification'
 import BookList from './components/BookList'
 import ModalView from './components/ModalView'
 
@@ -30,6 +31,7 @@ const App = () => {
   return (
     <React.Fragment>
       <SearchForm />
+      <Notification />
       <BookList openModal={showModal}/>
       {showBookDetails &&
       <ModalView

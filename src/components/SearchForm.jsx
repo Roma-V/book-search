@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
+import LoadingIndicator from './LoadingIndicator'
 import { useDebounce } from '../hooks/useDebounce'
 import openLibrary from '../services/openLibrary'
 import { fetchBooks } from '../store/booksSlice'
@@ -66,9 +67,12 @@ const SearchForm = () => {
         onChange={handleInput}
       />
       <button type="submit" className="btn__primary">
-        Find
+        {
+          loadingState === 'loading'
+            ? <LoadingIndicator />
+            : 'Find'
+        }
       </button>
-      <p>{loadingState}</p>
     </form>
   )
 }
