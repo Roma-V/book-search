@@ -46,7 +46,7 @@ const SearchForm = () => {
       </label>
       <select
         name="select-query-parameter"
-        className="search-form__input"
+        className="search-form__select"
         defaultValue={openLibrary.searchParameters[0]}
         onChange={handleSelect}
       >
@@ -66,7 +66,7 @@ const SearchForm = () => {
         value={input}
         onChange={handleInput}
       />
-      <button type="submit" className="btn__primary">
+      <button type="submit" className="btn btn__primary">
         {
           loadingState === 'loading'
             ? <LoadingIndicator />

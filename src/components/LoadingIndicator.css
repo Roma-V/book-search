@@ -1,12 +1,13 @@
 .loading {
   height: 100%;
+  line-height: inherit;
 }
 
 .dot {
     display: inline-block;
     width: 0.5em;
     height: 0.5em;
-    margin: 0.2em 0.4em;
+    margin: 0.4em 0.4em 0.2em 0.4em;
     border-radius: 50%;
     background-color: white;
     animation: wave 1s ease-out infinite;

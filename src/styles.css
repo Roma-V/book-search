@@ -33,16 +33,29 @@ a:hover, a:active {
     border-bottom: 1px solid rgb(201, 139, 46);
 }
 
-.btn__primary {
+.btn {
     display: inline-block;
     height: 100%;
-    padding: 0.8rem 1rem 0.7rem;
+    padding: 0.5rem 1rem;
     border: none;
     cursor: pointer;
     text-transform: capitalize;
+}
+
+.btn__primary {
     color: #fff;
     background-color: #000;
 }
+.btn__primary:hover {
+    box-shadow: 0 0 10px 0 silver;
+}
+
+.btn__inactive {
+    cursor: default;
+    color: #fff;
+    background-color: #aaa;
+}
+
 *:focus {
     outline: 2px dotted #ec9b22;
 }

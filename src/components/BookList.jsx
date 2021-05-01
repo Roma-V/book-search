@@ -1,31 +1,54 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 
 import BookListItem from './BookListItem'
-import { selectAllBooks, selectNumFound, selectPageNumber, selectNumPages } from '../store/booksSlice'
+import { 
+  selectAllBooks, 
+  selectNumFound, 
+  selectPageNumber, 
+  selectNumPages,
+  selectQuery,
+} from '../store/booksSlice'
+import openLibrary from '../services/openLibrary'
+import { fetchBooks } from '../store/booksSlice'
 
 import './BookList.css'
 
 const BookList = ({ openModal }) => {
+  const dispatch = useDispatch()
+
   const bookList = useSelector(selectAllBooks)
   const numFoundBooks = useSelector(selectNumFound)
   const numPages = useSelector(selectNumPages)
   const page = useSelector(selectPageNumber)
+  const query = useSelector(selectQuery)
 
   if (!bookList || bookList.length === 0) return null
+
+  function loadPaginationData(pageToLoad) {
+    dispatch(fetchBooks({
+      query: query.query,
+      searchParameter: query.searchParameter,
+      page: pageToLoad,
+    }))
+  }
 
   return (
     <>
       <h2>{bookList.length} book{bookList.length === 1 ? '' : 's'} of {numFoundBooks}</h2>
       {numPages > 1 &&
         <div>
-          <button className="btn__primary">
-            &lt; Previous page
-          </button>
+          <PaginationButton
+            onClick={page > 1 ? (() => loadPaginationData(page - 1)) : undefined}
+          >
+            &lt; <span className="hidden">Previous page</span>
+          </PaginationButton>
           <span className="num-pages">Page {page} of {numPages}</span>
-          <button className="btn__primary">
-            Next page &gt;
-          </button>
+          <PaginationButton
+            onClick={page < numPages ? (() => loadPaginationData(page + 1)) : undefined}
+          >
+            <span className="hidden">Next page</span> &gt;
+          </PaginationButton>
         </div>
       }
       <ul className="list-container" >
@@ -41,4 +64,18 @@ const BookList = ({ openModal }) => {
   )
 }
 
+const PaginationButton = ({ onClick, children }) => {
+  const className = "btn " + (onClick ? "btn__primary" : "btn__inactive")
+  const tabIndex = onClick ? "" : "-1"
+
+  return (
+    <button
+      className={className}
+      tabIndex={tabIndex}
+      onClick={onClick}
+    >
+      {children}
+    </button>
+  )
+}
 export default BookList

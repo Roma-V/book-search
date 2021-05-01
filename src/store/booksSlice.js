@@ -5,13 +5,13 @@ const booksAdapter = createEntityAdapter()
 const initialState = booksAdapter.getInitialState({
   status: 'idle',
   error: null,
-  numFound: null,
+  meta: null,
 })
 
 export const fetchBooks = createAsyncThunk(
   'books/fetchBooks',
-  async ({ query, searchParameter }) => {
-    const response = await openLibrary.search(query, searchParameter)
+  async ({ query, searchParameter, page }) => {
+    const response = await openLibrary.search(query, searchParameter, page)
     return response
   })
 
@@ -27,12 +27,15 @@ const booksSlice = createSlice({
     [fetchBooks.pending]: (state, action) => {
       state.status = 'loading'
       state.error = null
-      state.meta = null
+      state.meta = {
+        query: action.meta.arg,
+      }
     },
     [fetchBooks.fulfilled]: (state, action) => {
       state.status = 'succeeded'
 
       state.meta = {
+        ...state.meta,
         numFound: action.payload.numFound,
         start: action.payload.start,
       }
@@ -67,10 +70,14 @@ export function selectStartingBook(state) {
 
 export function selectPageNumber(state) {
   return state.books.meta &&
-    Math.ceil(state.books.meta.start / state.books.ids.length)
+    Math.floor(state.books.meta.start / 100) + 1
 }
 
 export function selectNumPages(state) {
   return state.books.meta &&
-    Math.ceil(state.books.meta.numFound / state.books.ids.length )
+    Math.ceil(state.books.meta.numFound / 100 )
+}
+
+export function selectQuery(state) {
+  return state.books.meta && state.books.meta.query
 }

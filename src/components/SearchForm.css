@@ -1,25 +1,28 @@
 .search-form {
-    display: block;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.search-form__label {
-    display: inline;
+.search-form > * {
+    margin: 0.5em;
+}
+
+.search-form__select {
+    padding: 0.5rem;
+    border: 1px solid silver;
+    border-radius: 0;
+    height: 100%;
+    align-self: stretch;
 }
 
 .search-form__input {
-    display: inline-block;
-    padding: 0.8rem 1rem 0.7rem;
+    padding: 0.5rem;
     border: 1px solid silver;
     border-radius: 0;
-    margin: 0 0.5em;
     height: 100%;
-}
-
-.search-form__input {
-    display: inline-block;
-    padding: 0.8rem 1rem 0.7rem;
-    border: 1px solid silver;
-    border-radius: 0;
-    margin: 0 0.5em;
-    height: 100%;
+    min-width: 30%; 
+    align-self: stretch;
+    flex: 1
 }

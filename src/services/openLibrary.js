@@ -10,11 +10,12 @@ function coverURL(coverId, size='S') {
   return `https://covers.openlibrary.org/b/id/${coverId}-${size}.jpg`
 }
 
-const search = (query, parameter = searchParameters[0]) => {
+const search = (query, parameter = searchParameters[0], page = 1) => {
   const request = axios({
     baseURL: searchURL,
     params: {
-      [parameter]: query.split(' ').join('+')
+      [parameter]: query.split(' ').join('+'),
+      page,
     },
   })
 
