@@ -28,7 +28,10 @@ const BookListItem = ({ id, openModal }) => {
     onKeyDown={handleKey}
     ref={itemRef}
   >
-    <Cover coverId={book.cover_i} />
+    <Cover
+      coverId={book.cover_i}
+      title={book.title}
+    />
     <h3 className="list-item__title" >
       {book.title}
     </h3>
@@ -43,11 +46,17 @@ const BookListItem = ({ id, openModal }) => {
   </li>
 }
 
-const Cover = ({ coverId }) =>
+const Cover = ({ coverId, title }) =>
   <React.Fragment>
     {
       coverId
-        ? <img src={openLibrary.coverURL(coverId)} className="list-item__image" />
+        ? <img
+          src={openLibrary.coverURL(coverId)}
+          className="list-item__image"
+          alt={`Cover image for ${title}`}
+          width="38"
+          height="58"
+        />
         : <div className="list-item__noimage">
           No cover<br></br>available
         </div>

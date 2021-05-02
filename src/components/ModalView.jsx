@@ -28,7 +28,9 @@ const ModalView = ({ id, closeModal, accessible }) => {
             <img
               src={openLibrary.coverURL(book.cover_i, 'M')}
               className="modal__image"
-              alt={`${book.title} cover image`}
+              alt={`Cover image for ${book.title}`}
+              width="180"
+              height="274"
             />}
               <section className="modal__content-text">
                 <p className="modal__author" >

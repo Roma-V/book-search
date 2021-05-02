@@ -31,16 +31,30 @@ const SearchForm = () => {
     setInput('')
   }
 
-  function handleSubmit(e) {
-    e.preventDefault()
+  function handleSubmit() {
+    if (loadingState !== 'loading') {
+      return function(e) {
+        e.preventDefault()
 
-    cancelQuery()
+        cancelQuery()
 
-    dispatch(fetchBooks({ query: input, searchParameter }))
+        dispatch(fetchBooks({ query: input, searchParameter }))
+      }
+    }
+    else {
+      return function(e) {
+        e.preventDefault()
+
+        cancelQuery()
+
+        const cancelToken = openLibrary.getCancelTokenSource()
+        cancelToken.cancel('Loading canceled.')
+      }
+    }
   }
 
   return (
-    <form className='search-form' onSubmit={handleSubmit} >
+    <form className='search-form' onSubmit={handleSubmit()} >
       <label htmlFor="search-query" className="search-form__label">
         Search for
       </label>
