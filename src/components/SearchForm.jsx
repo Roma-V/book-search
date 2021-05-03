@@ -70,7 +70,7 @@ const SearchForm = () => {
             value={param}
           >{param}</option>
         )}
-      </select>:
+      </select>
       <input
         type="text"
         id="search-query"

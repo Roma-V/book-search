@@ -19,7 +19,7 @@ const booksSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
-    setIdleStatus: (state, action) => {
+    setIdleStatus: state => {
       state.status = 'idle'
     },
   },
@@ -28,6 +28,7 @@ const booksSlice = createSlice({
       state.status = 'loading'
       state.error = null
       state.meta = {
+        ...state.meta,
         query: action.meta.arg,
       }
     },

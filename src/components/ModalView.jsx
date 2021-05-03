@@ -16,24 +16,22 @@ const ModalView = ({ id, closeModal, accessible }) => {
   const book = useSelector(state => selectBookById(state, id))
 
   return <React.Fragment>
-    <article className="modal__foreground">
+    <article className='modal__foreground'>
       {
         book
           ? <>
-            <h3 className="modal__title" >
+            <h3 className='modal__title' >
               {book.title}
             </h3>
-            <section className="modal__content">
+            <section className='modal__content'>
               {book.cover_i &&
             <img
               src={openLibrary.coverURL(book.cover_i, 'M')}
-              className="modal__image"
+              className='modal__image'
               alt={`Cover image for ${book.title}`}
-              width="180"
-              height="274"
             />}
-              <section className="modal__content-text">
-                <p className="modal__author" >
+              <section className='modal__content-text'>
+                <p className='modal__author' >
                   { book.author_name &&
                 book.author_name.length > 0
                     ? book.author_name.length > 1
@@ -41,16 +39,16 @@ const ModalView = ({ id, closeModal, accessible }) => {
                       : 'Author: ' + book.author_name
                     : null
                   }</p>
-                <p className="modal__published"
+                <p className='modal__published'
                   tabIndex='-1'
                   ref={elementToFocusRef}
                 >
                 First published: {book.first_publish_year || 'N/A'}
                 </p>
-                <p className="modal__publisher" >
-                Has {book.edition_count || 'N/A'} editions.
+                <p className='modal__publisher' >
+                Has {book.edition_count || 'N/A'} edition{book.edition_count === 1 ? '' : 's'}.
                 </p>
-                <p className="modal__isbn" >
+                <p className='modal__isbn' >
                 ISBN: {(book.isbn && book.isbn[0]) || 'N/A'}
                 </p>
               </section>
@@ -59,13 +57,13 @@ const ModalView = ({ id, closeModal, accessible }) => {
           : <p ref={elementToFocusRef}>No content found in current search query.</p>
       }
       <button
-        className="btn__primary btn__close-modal"
+        className='btn btn__primary btn__close-modal'
         onClick={() => closeModal()}
       >
         Close
       </button>
     </article>
-    <div className="modal__background" onClick={() => closeModal()}>
+    <div className='modal__background' onClick={() => closeModal()}>
     </div>
   </React.Fragment>
 }

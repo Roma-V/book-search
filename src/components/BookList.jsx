@@ -2,14 +2,13 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import BookListItem from './BookListItem'
-import { 
-  selectAllBooks, 
-  selectNumFound, 
-  selectPageNumber, 
+import {
+  selectAllBooks,
+  selectNumFound,
+  selectPageNumber,
   selectNumPages,
   selectQuery,
 } from '../store/booksSlice'
-import openLibrary from '../services/openLibrary'
 import { fetchBooks } from '../store/booksSlice'
 
 import './BookList.css'
@@ -41,17 +40,17 @@ const BookList = ({ openModal }) => {
           <PaginationButton
             onClick={page > 1 ? (() => loadPaginationData(page - 1)) : undefined}
           >
-            &lt; <span className="hidden">Previous page</span>
+            &lt; <span className='hidden'>Previous page</span>
           </PaginationButton>
-          <span className="num-pages">Page {page} of {numPages}</span>
+          <span className='num-pages'>Page {page} of {numPages}</span>
           <PaginationButton
             onClick={page < numPages ? (() => loadPaginationData(page + 1)) : undefined}
           >
-            <span className="hidden">Next page</span> &gt;
+            <span className='hidden'>Next page</span> &gt;
           </PaginationButton>
         </div>
       }
-      <ul className="list-container" >
+      <ul className='list-container' >
         {bookList.map(book =>
           <BookListItem
             key={book.key}
@@ -65,8 +64,8 @@ const BookList = ({ openModal }) => {
 }
 
 const PaginationButton = ({ onClick, children }) => {
-  const className = "btn " + (onClick ? "btn__primary" : "btn__inactive")
-  const tabIndex = onClick ? "" : "-1"
+  const className = 'btn ' + (onClick ? 'btn__primary' : 'btn__inactive')
+  const tabIndex = onClick ? '' : '-1'
 
   return (
     <button
