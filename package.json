@@ -5,7 +5,7 @@
     "description": "A search page with access to different book titles",
     "main": "src/index.js",
     "scripts": {
-        "start": "webpack-dev-server --open --mode development",
+        "start": "webpack-dev-server --mode development",
         "test": "jest",
         "eslint": "eslint './**/*.{js,jsx}'",
         "build": "webpack --mode production"
@@ -32,6 +32,7 @@
         "html-loader": "^1.1.0",
         "html-webpack-plugin": "^4.3.0",
         "jest": "^25.5.4",
+        "mini-css-extract-plugin": "^1.6.0",
         "normalize.css": "^8.0.1",
         "style-loader": "^1.2.1",
         "webpack": "^4.43.0",
