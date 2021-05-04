@@ -6,6 +6,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+      BASE_PATH: /book-search/
     if: ${{ github.event_name == 'push' && contains(join(github.event.commits.*.message), '#deploy') }}
     steps:
       - uses: actions/checkout@v2

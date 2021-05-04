@@ -1,12 +1,15 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const path = require('path');
 
+const BASE_PATH = process.env.BASE_PATH || '/';
+
+
 module.exports = {
   entry: "./src/index.jsx",
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
-    publicPath: '/book-search/'
+    publicPath: BASE_PATH,
   },
   module: {
     rules: [
