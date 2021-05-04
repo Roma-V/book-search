@@ -1,6 +1,7 @@
 {
     "name": "book-search",
     "version": "0.1.0",
+    "homepage": "https://roma-v.github.io/book-search",
     "description": "A search page with access to different book titles",
     "main": "src/index.js",
     "scripts": {
