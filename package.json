@@ -11,7 +11,8 @@
         "build": "webpack --mode production"
     },
     "repository": {
-        "type": "git"
+        "type": "git",
+        "url": "https://github.com/Roma-V/book-search"
     },
     "author": "Roman vasilyev",
     "license": "ISC",
