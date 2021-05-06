@@ -53,6 +53,7 @@ const booksSlice = createSlice({
 
 export default booksSlice.reducer
 
+// Slectors
 export const {
   selectAll: selectAllBooks,
   selectById: selectBookById,
