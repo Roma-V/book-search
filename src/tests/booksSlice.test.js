@@ -1,3 +1,9 @@
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
+import axios from 'axios'
+import MockAdapter from 'axios-mock-adapter'
+
+import { searchURL } from '../services/openLibrary'
 import reducer, {
   setIdleStatus,
   selectAllBooks,
@@ -7,6 +13,7 @@ import reducer, {
   selectPageNumber,
   selectNumPages,
   selectQuery,
+  fetchBooks,
 } from '../store/booksSlice'
 import fetchHelper from '../utils/fetchTestHelpers'
 
@@ -108,5 +115,50 @@ describe('SELECTORS', () => {
   it('selectQuery should return the books', () => {
     const numPages = selectQuery(appState)
     expect(numPages).toEqual(fetchHelper.states.fetchedState.meta.query)
+  })
+})
+
+/**
+ * Thiuk
+ */
+const mockStore = configureMockStore([thunk])
+const mockAxios = new MockAdapter(axios)
+let store
+
+describe('THUNK', () => {
+  beforeEach(() => {
+    store = mockStore({})
+  })
+
+  afterEach(() => {
+    mockAxios.reset()
+  })
+
+  it('fetchBooks should dispatch promise pending and fulfilled actions', async () => {
+    mockAxios.onGet(searchURL)
+      .reply(200, fetchHelper.fetch.mockFetchResponse)
+
+    await store.dispatch(fetchBooks(fetchHelper.fetch.testFetchQuery))
+
+    const actualActions = store.getActions().map(action => {
+      delete action.meta.requestId
+      return action
+    })
+
+    expect(actualActions).toStrictEqual(fetchHelper.fetch.expectedFetchSuccessActions)
+  })
+
+  it('fetchBooks on error should dispatch promise pending and rejected actions', async () => {
+    mockAxios.onGet(searchURL).networkError()
+
+    await store.dispatch(fetchBooks(fetchHelper.fetch.testFetchQuery))
+
+    const actualActions = store.getActions().map(action => {
+      delete action.meta.requestId
+      if (action.error) action.error = fetchHelper.fetch.expectedFetchRejectedActions[1].error
+      return action
+    })
+
+    expect(actualActions).toStrictEqual(fetchHelper.fetch.expectedFetchRejectedActions)
   })
 })

@@ -116,6 +116,69 @@ const fetchRejectedState = {
   },
 }
 
+const testFetchQuery = { query: 'onegin', searchParameter: 'title' }
+
+const mockFetchResponse = {
+  numFound: 2,
+  start: 0,
+  docs: [
+    {
+      title: 'Evgeni\u012d Onegin',
+      key: '/works/OL623499W',
+      author_name: ['Aleksandr Sergeyevich Pushkin'],
+      first_publish_year: 1833,
+    },
+    {
+      title: 'Onegin',
+      key: '/works/OL16488894W',
+      first_publish_year: 2011,
+      author_name: ['Aleksandr Sergeyevich Pushkin'],
+    },
+  ],
+  num_found: 2
+}
+
+const fetchStartAction = {
+  type: 'books/fetchBooks/pending',
+  meta: {
+    arg: testFetchQuery,
+    requestStatus: 'pending'
+  },
+  payload: undefined,
+}
+
+const fetchSuccessAction = {
+  type: 'books/fetchBooks/fulfilled',
+  payload: mockFetchResponse,
+  meta: {
+    arg: testFetchQuery,
+    requestStatus: 'fulfilled'
+  }
+}
+
+const fetchRejectedAction = {
+  type: 'books/fetchBooks/rejected',
+  payload: undefined,
+  meta: {
+    arg: testFetchQuery,
+    rejectedWithValue: false,
+    requestStatus: 'rejected',
+    aborted: false,
+    condition: false
+  },
+  error: {  message: 'Network Error' }
+}
+
+const expectedFetchSuccessActions = [
+  fetchStartAction,
+  fetchSuccessAction,
+]
+
+const expectedFetchRejectedActions = [
+  fetchStartAction,
+  fetchRejectedAction,
+]
+
 export default {
   states: {
     initialState,
@@ -127,5 +190,11 @@ export default {
     fetchAction,
     fetchedAction,
     rejectAction,
+  },
+  fetch: {
+    testFetchQuery,
+    mockFetchResponse,
+    expectedFetchSuccessActions,
+    expectedFetchRejectedActions,
   }
 }
