@@ -1,12 +1,12 @@
 import axios from 'axios'
-export const searchURL = 'https://openlibrary.org/search.json'
+const searchURL = 'https://openlibrary.org/search.json'
 const searchParameters = [
   'title',
   'author',
   'subject',
 ]
 
-let cancelTokenSource
+let cancelTokenSource = null
 
 function getCancelTokenSource() {
   return cancelTokenSource
@@ -30,8 +30,9 @@ const search = (query, parameter = searchParameters[0], page = 1) => {
 }
 
 export default {
+  searchURL,
+  searchParameters,
   coverURL,
   search,
-  searchParameters,
   getCancelTokenSource,
 }

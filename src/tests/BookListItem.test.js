@@ -18,7 +18,7 @@ function renderListItem(id) {
 const propperId = helper.states.fetchedState.ids[0]
 const impropperId = propperId.replace('b', 'c')
 
-describe.only('BookListItem', () => {
+describe('BookListItem', () => {
   afterEach(() => {
     mockShowModal.mockReset()
   })

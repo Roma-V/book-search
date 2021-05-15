@@ -9,8 +9,6 @@ import { selectBookById } from '../store/booksSlice'
 const BookListItem = ({ id, openModal }) => {
   const itemRef = useRef()
 
-  const book = useSelector(state => selectBookById(state, id))
-
   function handleKey(event) {
     if (event.isComposing || event.keyCode === 229) {
       return
@@ -21,6 +19,7 @@ const BookListItem = ({ id, openModal }) => {
     }
   }
 
+  const book = useSelector(state => selectBookById(state, id))
   if (!book) return null
 
   return <li
