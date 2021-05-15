@@ -21,6 +21,8 @@ const BookListItem = ({ id, openModal }) => {
     }
   }
 
+  if (!book) return null
+
   return <li
     className="list-item"
     tabIndex="0"

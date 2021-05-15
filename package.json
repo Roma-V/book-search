@@ -6,7 +6,7 @@
     "main": "src/index.js",
     "scripts": {
         "start": "webpack-dev-server --mode development",
-        "test": "jest",
+        "test": "jest --verbose",
         "eslint": "eslint './**/*.{js,jsx}'",
         "build": "webpack --mode production"
     },

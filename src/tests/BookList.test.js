@@ -31,7 +31,7 @@ describe('BookList', () => {
       expect(component.container).not.toBeEmptyDOMElement()
     })
 
-    test('contains book teiles', () => {
+    test('contains book titles', () => {
       const component = render(
         <BookList openModal={mockShowModal}/>,
         { initialState: { books: helper.states.fetchedState } }
