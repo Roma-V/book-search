@@ -1,23 +1,56 @@
 import React from 'react'
 
-import { render } from '../utils/testRenderUtils'
+import { render, act } from '../utils/testRenderUtils'
 import helper from '../utils/fetchTestHelpers'
 
 import Notification from '../components/Notification'
 
-function renderNotification() {
-  return render(
-    <Notification/>,
-    { initialState: { books: helper.states.fetchedState } }
-  )
-}
-
 describe('Notification', () => {
-  test.todo('does not render for idle and loading status')
+  test('does not render for idle and loading status', () => {
+    const component = render(
+      <Notification/>,
+      { initialState: { books: helper.states.initialState } }
+    )
+    expect(component.container).toBeEmptyDOMElement()
+  })
 
-  test.todo('renders for succeeded status')
+  test('renders for succeeded status', () => {
+    const component = render(
+      <Notification/>,
+      { initialState: { books: helper.states.fetchedState } }
+    )
+    const numFoundBooks = helper.states.fetchedState.meta.numFound
+    const message = `A total of ${numFoundBooks} book${numFoundBooks === 1 ? '' : 's'} found.`
 
-  test.todo('renders for failed status')
+    expect(component.container).toHaveTextContent(message)
+  })
 
-  test.todo('disapears after 5 seconds on screen')
+  test('renders for failed status', () => {
+    const component = render(
+      <Notification/>,
+      { initialState: { books: helper.states.fetchRejectedState } }
+    )
+    const message = helper.states.fetchRejectedState.error.message
+
+    expect(component.container).toHaveTextContent(message)
+  })
+
+  test('disapears after 5 seconds on screen', () => {
+    jest.useFakeTimers('modern')
+    const component = render(
+      <Notification/>,
+      { initialState: { books: helper.states.fetchRejectedState } }
+    )
+    const message = helper.states.fetchRejectedState.error.message
+
+    expect(component.container).toHaveTextContent(message)
+
+    act(() => {
+      jest.advanceTimersByTime(5000)
+    })
+
+    expect(component.container).toBeEmptyDOMElement()
+
+    jest.useRealTimers()
+  })
 })

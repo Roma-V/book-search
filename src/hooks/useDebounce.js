@@ -11,6 +11,9 @@ export function useDebounce(input, delay) {
   useEffect(() => {
     if (timerId) cancelQuery()
     setTimerId(setTimeout(memoizedCallback, delay))
+    return function() {
+      clearTimeout(timerId)
+    }
   }, [memoizedCallback, delay])
 
   function cancelQuery() {

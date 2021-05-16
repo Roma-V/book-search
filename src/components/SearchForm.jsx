@@ -74,6 +74,7 @@ const SearchForm = () => {
       <input
         type="text"
         id="search-query"
+        data-testid="search-query"
         className="search-form__input"
         name="search-query"
         autoComplete="off"

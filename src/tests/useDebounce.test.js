@@ -1,8 +1,14 @@
 import React, { useState } from 'react'
-import { render, fireEvent, getByTestId, act } from '@testing-library/react'
+import { render, fireEvent, act } from '@testing-library/react'
 
 import { useDebounce } from '../hooks/useDebounce'
 
+/**
+ * A mock React component is nedded to run the standard hooks.
+ * @param {Object} props - an object with a delay property,
+ *                         which is delay in ms to be applied in debounce.
+ * @returns {JSX} - The rendered component.
+ */
 const HookTestComponent = ({ delay }) => {
   const [input, setInput] = useState('')
   const [newValue, cancelQuery] = useDebounce(input, delay)
@@ -16,6 +22,7 @@ const HookTestComponent = ({ delay }) => {
         onChange={(e) => setInput(e.target.value)}
       />
       <p data-testid="debounced-value">{newValue}</p>
+      <button onClick={() => cancelQuery()}>Cancel</button>
     </>
   )
 }
@@ -23,12 +30,18 @@ const HookTestComponent = ({ delay }) => {
 const newValue = 'new input'
 const delay = 1000
 
-// jest.useFakeTimers()
-
 describe('useDebounce hook', () => {
+  beforeEach(() => {
+    jest.useFakeTimers('modern')
+  })
+
+  afterEach(() => {
+    jest.useRealTimers()
+  })
+
   test('returns initial value immidiately', () => {
     const component = render(<HookTestComponent delay={delay} />)
-    expect(component.getByTestId('debounced-value')).toHaveTextContent('')
+    expect(component.getByTestId('debounced-value')).toBeEmptyDOMElement()
   })
 
   test('does not change value immidiately on input', () => {
@@ -39,21 +52,43 @@ describe('useDebounce hook', () => {
       fireEvent.change(inputElement, { target: { value: newValue } })
     })
 
-    expect(component.getByTestId('debounced-value')).toHaveTextContent('')
+    expect(component.getByTestId('debounced-value')).toBeEmptyDOMElement()
   })
 
-//   test('changes value after the specified delay', async () => {
-//     const component = render(<HookTestComponent delay={delay} />)
-//     const input = component.getByTestId('input')
+  test('changes value after the specified delay', () => {
+    const component = render(<HookTestComponent delay={delay} />)
+    const input = component.getByTestId('input')
 
-//     act(() => {
-//       fireEvent.change(input, { target: { value: newValue } })
-//     })
+    act(() => {
+      fireEvent.change(input, { target: { value: newValue } })
+    })
+    act(() => {
+      jest.runAllTimers()
+    })
 
-//     await act(() => new Promise(resolve => setTimeout(resolve, 1000)))
+    expect(component.getByTestId('debounced-value')).toHaveTextContent(newValue)
+  })
 
-//     expect(component.getByTestId('debounced-value')).toHaveTextContent(newValue)
-//   })
+  test('does not change value if called cancelQuery', () => {
+    const component = render(<HookTestComponent delay={delay} />)
+    const input = component.getByTestId('input')
 
-  test.todo('does not change value if called cancelQuery')
+    act(() => {
+      fireEvent.change(input, { target: { value: newValue } })
+    })
+    act(() => {
+      jest.advanceTimersByTime(delay/2)
+    })
+
+    expect(component.getByTestId('debounced-value')).toBeEmptyDOMElement()
+
+    act(() => {
+      fireEvent.click(component.getByText('Cancel'))
+    })
+    act(() => {
+      jest.advanceTimersByTime(delay)
+    })
+
+    expect(component.getByTestId('debounced-value')).toBeEmptyDOMElement()
+  })
 })
