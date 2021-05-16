@@ -1,13 +1,26 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-const mockAxios = new MockAdapter(axios)
+import openLibrary from '../services/openLibrary'
 
 describe('openLibrary service', () => {
-  describe('coverURL', () => {
-    test.todo('returns a URL to a specified cover ID and specified image size')
+  const mockAxios = new MockAdapter(axios)
 
-    test.todo('returns a URL to a specified cover ID and Small image size if no size provided')
+  describe('coverURL', () => {
+    const coverId = '839281'
+    const coverSize = 'M'
+
+    test('returns a URL to a specified cover ID and specified image size', () => {
+      const url = openLibrary.coverURL(coverId, coverSize)
+      expect(url).toMatch(/covers.openlibrary.org/i)
+      expect(url).toMatch(`${coverId}-${coverSize}.jpg`)
+    })
+
+    test('returns a URL to a specified cover ID and Small image size if no size provided', () => {
+      const url = openLibrary.coverURL(coverId)
+      expect(url).toMatch(/covers.openlibrary.org/i)
+      expect(url).toMatch(`${coverId}-S.jpg`)
+    })
   })
 
   describe('search', () => {

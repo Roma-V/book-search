@@ -1,13 +1,13 @@
 import React from 'react'
 
-import { render, screen } from '../utils/testRenderUtils'
+import { render } from '../utils/testRenderUtils'
 import helper from '../utils/fetchTestHelpers'
 
 import BookList from '../components/BookList'
 
-let mockShowModal = jest.fn()
-
 describe('BookList', () => {
+  let mockShowModal = jest.fn()
+
   afterEach(() => {
     mockShowModal.mockReset()
   })

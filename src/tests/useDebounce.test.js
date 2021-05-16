@@ -27,10 +27,10 @@ const HookTestComponent = ({ delay }) => {
   )
 }
 
-const newValue = 'new input'
-const delay = 1000
-
 describe('useDebounce hook', () => {
+  const newValue = 'new input'
+  const delay = 1000
+
   beforeEach(() => {
     jest.useFakeTimers('modern')
   })

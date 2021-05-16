@@ -5,20 +5,21 @@ import helper from '../utils/fetchTestHelpers'
 
 import BookListItem from '../components/BookListItem'
 
-let mockShowModal = jest.fn()
-function renderListItem(id) {
-  return render(
-    <BookListItem
-      id={id}
-      openModal={mockShowModal}
-    />,
-    { initialState: { books: helper.states.fetchedState } }
-  )
-}
-const propperId = helper.states.fetchedState.ids[0]
-const impropperId = propperId.replace('b', 'c')
 
 describe('BookListItem', () => {
+  let mockShowModal = jest.fn()
+  function renderListItem(id) {
+    return render(
+      <BookListItem
+        id={id}
+        openModal={mockShowModal}
+      />,
+      { initialState: { books: helper.states.fetchedState } }
+    )
+  }
+  const propperId = helper.states.fetchedState.ids[0]
+  const impropperId = propperId.replace('b', 'c')
+
   afterEach(() => {
     mockShowModal.mockReset()
   })

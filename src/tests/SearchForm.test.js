@@ -16,15 +16,28 @@ function renderSearchForm() {
   )
 }
 
-const mockAxios = new MockAdapter(axios)
-const mockGet = jest.fn(
-  () => Promise.resolve([200, fetchHelper.fetch.mockFetchResponse])
-)
-
 describe('SearchForm', () => {
+  const fetchDuration = 1000
+  const mockAxios = new MockAdapter(axios)
+  const mockGet = jest.fn(
+    () => new Promise((resolve, reject) => {
+      setTimeout(
+        () => resolve([200, fetchHelper.fetch.mockFetchResponse]),
+        fetchDuration
+      )
+    })
+  )
+
+  beforeEach(() => {
+    jest.useFakeTimers()
+    mockAxios.onGet(searchURL)
+      .reply(mockGet)
+  })
+
   afterEach(() => {
     mockAxios.reset()
     mockGet.mockReset()
+    jest.useRealTimers()
   })
 
   test('renders', () => {
@@ -33,8 +46,6 @@ describe('SearchForm', () => {
   })
 
   test('starts fetching on click of the submit button', async () => {
-    mockAxios.onGet(searchURL)
-      .reply(mockGet)
 
     const component = renderSearchForm()
     const textInput = component.getByTestId('search-query')
@@ -49,10 +60,6 @@ describe('SearchForm', () => {
   })
 
   test('starts fetching after 1 second wait on non-empty text input', async () => {
-    jest.useFakeTimers()
-    mockAxios.onGet(searchURL)
-      .reply(mockGet)
-
     const component = renderSearchForm()
     const textInput = component.getByTestId('search-query')
 
@@ -65,7 +72,6 @@ describe('SearchForm', () => {
     })
 
     expect(mockGet).toHaveBeenCalledTimes(1)
-    jest.useRealTimers()
   })
 
   test.todo('aborts fetching on click of the submit button')

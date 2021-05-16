@@ -5,21 +5,21 @@ import helper from '../utils/fetchTestHelpers'
 
 import ModalView from '../components/ModalView'
 
-let mockCloseModal = jest.fn()
-function renderModal(id, accessible=false) {
-  return render(
-    <ModalView
-      id={id}
-      closeModal={mockCloseModal}
-      accessible={accessible}
-    />,
-    { initialState: { books: helper.states.fetchedState } }
-  )
-}
-const propperId = helper.states.fetchedState.ids[0]
-const impropperId = propperId.replace('b', 'c')
-
 describe('ModalView', () => {
+  let mockCloseModal = jest.fn()
+  function renderModal(id, accessible=false) {
+    return render(
+      <ModalView
+        id={id}
+        closeModal={mockCloseModal}
+        accessible={accessible}
+      />,
+      { initialState: { books: helper.states.fetchedState } }
+    )
+  }
+  const propperId = helper.states.fetchedState.ids[0]
+  const impropperId = propperId.replace('b', 'c')
+
   afterEach(() => {
     mockCloseModal.mockReset()
   })
