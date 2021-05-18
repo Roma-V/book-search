@@ -2,9 +2,13 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 import openLibrary from '../services/openLibrary'
+import fetchHelper from '../utils/fetchTestHelpers'
 
 describe('openLibrary service', () => {
   const mockAxios = new MockAdapter(axios)
+  const mockGet = jest.fn(
+    () => Promise.resolve([200, fetchHelper.fetch.mockFetchResponse])
+  )
 
   describe('coverURL', () => {
     const coverId = '839281'
@@ -24,9 +28,28 @@ describe('openLibrary service', () => {
   })
 
   describe('search', () => {
-    test.todo('returns a promise')
+    const query = 'author'
+    const parameter = openLibrary.searchParameters[1]
+    const page = 2
 
-    test.todo('trigger axios get method with searchURL and defined query and parametes')
+    beforeEach(() => {
+      mockAxios.onGet(openLibrary.searchURL).reply(mockGet)
+    })
+
+    afterEach(() => {
+      mockAxios.reset()
+      mockGet.mockReset()
+    })
+
+    test('returns a promise', async () => {
+      const returnValue = openLibrary.search(query, parameter, page)
+      expect(returnValue).toBeInstanceOf(Promise)
+    })
+
+    test('triggers axios get method with searchURL and defined query and parametes', async () => {
+      await openLibrary.search(query, parameter, page)
+      expect(mockGet).toHaveBeenCalledTimes(1)
+    })
 
     test.todo('if parameter is not provided defaults to title')
 

@@ -20,7 +20,7 @@ describe('SearchForm', () => {
   const fetchDuration = 1000
   const mockAxios = new MockAdapter(axios)
   const mockGet = jest.fn(
-    () => new Promise((resolve, reject) => {
+    () => new Promise(resolve => {
       setTimeout(
         () => resolve([200, fetchHelper.fetch.mockFetchResponse]),
         fetchDuration
