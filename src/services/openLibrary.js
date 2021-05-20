@@ -26,8 +26,9 @@ const search = (query, parameter = searchParameters[0], page = 1) => {
     cancelToken: cancelTokenSource.token,
   })
 
-  // eslint-disable-next-line no-console
-  return request.then(response => response.data).catch(err => console.log(err.message))
+  return request
+    .then(response => response.data)
+    .finally(() => cancelTokenSource = null)
 }
 
 export default {

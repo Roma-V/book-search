@@ -28,8 +28,11 @@ describe('SearchForm', () => {
     })
   )
 
-  beforeEach(() => {
+  beforeAll(() => {
     jest.useFakeTimers()
+  })
+
+  beforeEach(() => {
     mockAxios.onGet(searchURL)
       .reply(mockGet)
   })
@@ -37,6 +40,9 @@ describe('SearchForm', () => {
   afterEach(() => {
     mockAxios.reset()
     mockGet.mockReset()
+  })
+
+  afterAll(() => {
     jest.useRealTimers()
   })
 
@@ -46,13 +52,17 @@ describe('SearchForm', () => {
   })
 
   test('starts fetching on click of the submit button', async () => {
-
     const component = renderSearchForm()
     const textInput = component.getByTestId('search-query')
     const findButton = component.getByText('Find')
 
     await act(async () => {
       fireEvent.change(textInput, { target: { value: 'author' } })
+    })
+
+    expect(mockGet).toHaveBeenCalledTimes(0)
+
+    await act(async () => {
       fireEvent.click(findButton)
     })
 
@@ -66,6 +76,8 @@ describe('SearchForm', () => {
     await act(async () => {
       fireEvent.change(textInput, { target: { value: 'author' } })
     })
+
+    expect(mockGet).toHaveBeenCalledTimes(0)
 
     await act(async () => {
       jest.runAllTimers()

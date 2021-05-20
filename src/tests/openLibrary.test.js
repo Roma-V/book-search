@@ -2,14 +2,8 @@ import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
 import openLibrary from '../services/openLibrary'
-import fetchHelper from '../utils/fetchTestHelpers'
 
 describe('openLibrary service', () => {
-  const mockAxios = new MockAdapter(axios)
-  const mockGet = jest.fn(
-    () => Promise.resolve([200, fetchHelper.fetch.mockFetchResponse])
-  )
-
   describe('coverURL', () => {
     const coverId = '839281'
     const coverSize = 'M'
@@ -27,40 +21,84 @@ describe('openLibrary service', () => {
     })
   })
 
+  const mockAxios = new MockAdapter(axios)
+  const mockFn = jest.fn()
+  const mockResponse = function () {
+    mockFn()
+    return [200, {}]
+  }
+  const query = 'author'
+
   describe('search', () => {
-    const query = 'author'
     const parameter = openLibrary.searchParameters[1]
     const page = 2
 
-    beforeEach(() => {
-      mockAxios.onGet(openLibrary.searchURL).reply(mockGet)
-    })
-
     afterEach(() => {
       mockAxios.reset()
-      mockGet.mockReset()
+      mockFn.mockReset()
     })
 
     test('returns a promise', async () => {
+      mockAxios.onGet(openLibrary.searchURL).reply(200)
       const returnValue = openLibrary.search(query, parameter, page)
       expect(returnValue).toBeInstanceOf(Promise)
     })
 
     test('triggers axios get method with searchURL and defined query and parametes', async () => {
+      mockAxios.onGet(openLibrary.searchURL).reply(mockResponse)
       await openLibrary.search(query, parameter, page)
-      expect(mockGet).toHaveBeenCalledTimes(1)
+      expect(mockFn).toHaveBeenCalledTimes(1)
     })
 
-    test.todo('if parameter is not provided defaults to title')
-
-    test.todo('if page is not provided defaults to 1')
+    test('if search parameter and page are not provided defaults to title and 1', async () => {
+      mockAxios.onGet(
+        openLibrary.searchURL,
+        {
+          params: {
+            [openLibrary.searchParameters[0]]: query.split(' ').join('+'),
+            page: 1,
+          },
+        }
+      ).reply(mockResponse)
+      await openLibrary.search(query)
+      expect(mockFn).toHaveBeenCalledTimes(1)
+    })
   })
 
   describe('getCancelTokenSource', () => {
-    test.todo('returns null before fetching')
+    beforeEach(() => {
+      mockAxios.onGet(openLibrary.searchURL).reply(200)
+    })
 
-    test.todo('return a axios.CancelToken after fetch start')
+    afterEach(() => {
+      mockAxios.reset()
+    })
 
-    test.todo('the CancelToken returned is the one attached to axios get call')
+    test('returns null before fetching', () => {
+      const source = openLibrary.getCancelTokenSource()
+      expect(source).toBeNull()
+    })
+
+    test('return a axios.CancelToken after fetch start', () => {
+      openLibrary.search(query)
+      const source = openLibrary.getCancelTokenSource()
+
+      expect(source).toBeInstanceOf(Object)
+      expect(source.token).toBeInstanceOf(Object)
+      expect(source.cancel).toBeInstanceOf(Function)
+    })
+
+    test('causes axios to return axios.Cancel instance with designated message', async () => {
+      const getPromise = openLibrary.search(query)
+
+      const source = openLibrary.getCancelTokenSource()
+      const cancelMessage = 'Operation canceled by the user.'
+      source.cancel(cancelMessage)
+
+      getPromise.catch(e => {
+        expect(e).toBeInstanceOf(axios.Cancel)
+        expect(e.message).toEqual(cancelMessage)
+      })
+    })
   })
 })
