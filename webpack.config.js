@@ -6,7 +6,7 @@ const BASE_PATH = process.env.BASE_PATH || '/';
 
 
 module.exports = {
-  entry: "./src/index.jsx",
+  entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'bundle.js',
@@ -14,6 +14,11 @@ module.exports = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
@@ -35,7 +40,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        loaders: [MiniCssExtractPlugin.loader, 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
       // {
       //   test: /\.css$/,
@@ -44,7 +49,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ["*", ".js", ".jsx"],
+    extensions: ["*", '.tsx', '.ts', ".js", ".jsx"],
   },
   devServer: {
     historyApiFallback: true,

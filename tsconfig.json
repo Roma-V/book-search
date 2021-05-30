@@ -1,0 +1,29 @@
+{
+    "compilerOptions": {
+        "outDir": "./build/",
+        "noImplicitAny": true,
+        "module": "es6",
+        "target": "es5",
+        "lib": ["es6", "dom"],
+        "sourceMap": true,
+        "jsx": "react",
+        "allowJs": true,
+        "moduleResolution": "node",
+        // "rootDir": "src",
+        "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "importHelpers": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true,
+        "skipLibCheck": true,
+        "allowSyntheticDefaultImports": true
+    },
+    "exclude": [
+      "node_modules",
+      "build",
+      "__mock__",
+      "webpack.config.js"
+    ]
+}

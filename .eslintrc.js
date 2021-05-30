@@ -1,4 +1,14 @@
 module.exports = {
+    parser: "@typescript-eslint/parser",
+    parserOptions: {
+        ecmaVersion: 2020,
+        sourceType: "module",
+        ecmaFeatures: {
+            jsx: true,
+        },
+        project: "./tsconfig.json",
+        tsconfigRootDir: __dirname,
+    },
     "env": {
         "browser": true,
         "es6": true,
@@ -6,7 +16,10 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        "plugin:react/recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@typescript-eslint/recommended-requiring-type-checking",
     ],
     "settings": {
         "react": {
@@ -21,7 +34,7 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react", "jest"
+        "react", "jest", "@typescript-eslint"
     ],
     "rules": {
         "indent": [
@@ -49,6 +62,8 @@ module.exports = {
             "error", { "before": true, "after": true }
         ],
         "no-console": "error",
-        "react/prop-types": 0
+        "react/prop-types": 0,
+        "@typescript-eslint/explicit-function-return-type": 0,
+        "@typescript-eslint/explicit-module-boundary-types": 0
     }
 }
