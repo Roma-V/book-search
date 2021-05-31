@@ -5,13 +5,15 @@ import Notification from './components/Notification'
 import BookList from './components/BookList'
 import ModalView from './components/ModalView'
 
+import { elementRef } from './utils/types'
+
 import './styles.css'
 
-const App = () => {
-  const [showBookDetails, setShowBookDetails] = useState(null)
-  const [lastRef, setLastRef] = useState(null)
+const App = (): JSX.Element => {
+  const [showBookDetails, setShowBookDetails] = useState<string | null>(null)
+  const [lastRef, setLastRef] = useState<elementRef>(null)
 
-  function showModal(bookId, ref) {
+  function showModal(bookId: string, ref: elementRef) {
     setShowBookDetails(bookId)
     document.body.style.overflow = 'hidden'
     setLastRef(ref)
