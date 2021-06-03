@@ -102,17 +102,17 @@ describe('SELECTORS', () => {
     expect(start).toEqual(fetchHelper.states.fetchedState.meta.start)
   })
 
-  test('selectPageNumber should return the books', () => {
+  test('selectPageNumber should return the page number', () => {
     const page = selectPageNumber(appState)
     expect(page).toEqual(1)
   })
 
-  test('selectNumPages should return the books', () => {
+  test('selectNumPages should return the number of pages', () => {
     const numPages = selectNumPages(appState)
     expect(numPages).toEqual(1)
   })
 
-  test('selectQuery should return the books', () => {
+  test('selectQuery should return the query', () => {
     const numPages = selectQuery(appState)
     expect(numPages).toEqual(fetchHelper.states.fetchedState.meta.query)
   })

@@ -33,6 +33,13 @@ const fetchedAction = {
         first_publish_year: 1919,
         author_name: ['Aleksandr Sergeyevich Pushkin'],
       },
+      {
+        key: 'b3',
+        title: 'Evgenii Onegin',
+        type: 'work',
+        first_publish_year: 2002,
+        author_name: ['Aleksandr Sergeyevich Pushkin'],
+      },
     ],
     num_found: 2
   },
@@ -104,6 +111,10 @@ const fetchedState = {
     b2: {
       ...fetchedAction.payload.docs[1],
       id: fetchedAction.payload.docs[1].key
+    },
+    b3: {
+      ...fetchedAction.payload.docs[2],
+      id: fetchedAction.payload.docs[2].key
     }
   },
 }

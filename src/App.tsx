@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
+import * as React from 'react'
+import { useState } from 'react'
 
 import SearchForm from './components/SearchForm'
 import Notification from './components/Notification'
 import BookList from './components/BookList'
 import ModalView from './components/ModalView'
 
-import { elementRef } from './utils/types'
+import { ElementRef } from './utils/types'
 
 import './styles.css'
 
 const App = (): JSX.Element => {
   const [showBookDetails, setShowBookDetails] = useState<string | null>(null)
-  const [lastRef, setLastRef] = useState<elementRef>(null)
+  const [lastRef, setLastRef] = useState<ElementRef>(null)
 
-  function showModal(bookId: string, ref: elementRef) {
+  function showModal(bookId: string, ref: ElementRef) {
     setShowBookDetails(bookId)
     document.body.style.overflow = 'hidden'
     setLastRef(ref)

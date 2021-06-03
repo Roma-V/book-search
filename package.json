@@ -21,6 +21,7 @@
         "@babel/plugin-transform-runtime": "^7.10.0",
         "@babel/preset-env": "^7.9.6",
         "@babel/preset-react": "^7.9.4",
+        "@babel/preset-typescript": "^7.13.0",
         "@testing-library/jest-dom": "^5.12.0",
         "@testing-library/react": "^10.4.9",
         "@types/jest": "^26.0.23",
@@ -36,16 +37,17 @@
         "eslint-plugin-react": "^7.19.0",
         "html-loader": "^1.1.0",
         "html-webpack-plugin": "^4.3.0",
-        "jest": "^26.5.0",
+        "jest": "^27.0.4",
         "mini-css-extract-plugin": "^1.6.0",
         "normalize.css": "^8.0.1",
         "redux-mock-store": "^1.5.4",
         "style-loader": "^1.2.1",
+        "ts-jest": "^27.0.2",
         "ts-loader": "^9.2.2",
         "typescript": "^4.3.2",
         "webpack": "^5.38.1",
         "webpack-cli": "^4.7.0",
-        "webpack-dev-server": "^3.11.0"
+        "webpack-dev-server": "^3.11.2"
     },
     "dependencies": {
         "@reduxjs/toolkit": "^1.5.1",
@@ -53,14 +55,7 @@
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-redux": "^7.2.4",
-        "redux": "^4.1.0"
-    },
-    "jest": {
-        "moduleNameMapper": {
-            "\\.(css|less)$": "<rootDir>/__mocks__/styleMock.js"
-        },
-        "setupFilesAfterEnv": [
-            "<rootDir>/src/tests/jestSetup.js"
-        ]
+        "redux": "^4.1.0",
+        "ts-node": "^10.0.0"
     }
 }
