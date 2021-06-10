@@ -5,12 +5,15 @@ import './BookListItem.css'
 
 import openLibrary from '../services/openLibrary'
 import { selectBookById } from '../store/booksSlice'
+import { BookListItemProps, ElementRef, Book, CoverProps } from '../utils/types'
+import { RootState } from '../store/store'
 
-const BookListItem = ({ id, openModal }) => {
-  const itemRef = useRef()
+const BookListItem: React.FC<BookListItemProps> = ({ id, openModal }: BookListItemProps) => {
+  const itemRef: ElementRef = useRef()
 
-  function handleKey(event) {
-    if (event.isComposing || event.keyCode === 229) {
+  function handleKey(event: KeyboardEvent) {
+    // eslint-disable-next-line no-irregular-whitespace
+    if (event.isComposing || event.keyCode === 229) { // try e.key === "​Unidentified"
       return
     }
 
@@ -19,15 +22,15 @@ const BookListItem = ({ id, openModal }) => {
     }
   }
 
-  const book = useSelector(state => selectBookById(state, id))
+  const book = useSelector<RootState, Book | undefined>(state => selectBookById(state, id))
   if (!book) return null
 
   return <li
     className="list-item"
-    tabIndex="0"
-    onClick={() => openModal(id)}
-    onKeyDown={handleKey}
-    ref={itemRef}
+    tabIndex={'0' as unknown as number}
+    onClick={() => openModal(id, null)}
+    onKeyDown={handleKey as unknown as React.KeyboardEventHandler<HTMLLIElement>}
+    ref={itemRef as unknown as React.LegacyRef<HTMLLIElement> | undefined}
   >
     <Cover
       coverId={book.cover_i}
@@ -47,7 +50,7 @@ const BookListItem = ({ id, openModal }) => {
   </li>
 }
 
-const Cover = ({ coverId, title }) =>
+const Cover: React.FC<CoverProps> = ({ coverId, title }: CoverProps) =>
   <React.Fragment>
     {
       coverId

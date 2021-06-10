@@ -1,13 +1,47 @@
-import { SerializedError } from '@reduxjs/toolkit'
+import React from 'react'
+import { SerializedError, EntityId } from '@reduxjs/toolkit'
 
 interface MutableRefObject<T> {
     current: T;
 }
 
+type OpenModalFunction = (bookId: EntityId, ref: ElementRef) => void
+
 /**
  * A type for use with useRef hook.
  */
-export type ElementRef = MutableRefObject<HTMLElement> | null
+export type ElementRef = MutableRefObject<HTMLElement | undefined> | null
+
+/**
+ * BookList component Props.
+ */
+export interface BookListProps {
+    openModal: OpenModalFunction;
+}
+
+/**
+ * BookListItem component Props.
+ */
+export interface BookListItemProps {
+    id: EntityId;
+    openModal: OpenModalFunction;
+}
+
+/**
+ * Cover component Props.
+ */
+export interface CoverProps {
+    coverId: string;
+    title: string;
+}
+
+/**
+ * PaginationButton component Props.
+ */
+export interface PaginationButton {
+    onClick: (() => void) | undefined;
+    children: React.ReactNode;
+}
 
 /**
  * An object with parameters used in a thunk fetching search results.
@@ -24,8 +58,10 @@ export interface SearchParameters {
 export interface Book {
     id: string;
     title: string;
+    author_name: [string];
     key: string;
     first_publish_year: number;
+    cover_i: string;
 }
 
 /**

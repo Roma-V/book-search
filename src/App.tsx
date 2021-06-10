@@ -24,7 +24,7 @@ const App = (): JSX.Element => {
     setShowBookDetails(null)
     document.body.style.overflow = 'unset'
     if (lastRef) {
-      lastRef.current.focus()
+      lastRef.current?.focus()
     }
     setLastRef(null)
   }

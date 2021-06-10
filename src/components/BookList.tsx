@@ -10,10 +10,11 @@ import {
   selectQuery,
 } from '../store/booksSlice'
 import { fetchBooks } from '../store/booksSlice'
+import { BookListProps, PaginationButton } from '../utils/types'
 
 import './BookList.css'
 
-const BookList = ({ openModal }) => {
+const BookList: React.FC<BookListProps> = ({ openModal }: BookListProps) => {
   const dispatch = useDispatch()
 
   const bookList = useSelector(selectAllBooks)
@@ -24,8 +25,8 @@ const BookList = ({ openModal }) => {
 
   if (!bookList || bookList.length === 0) return null
 
-  function loadPaginationData(pageToLoad) {
-    dispatch(fetchBooks({
+  function loadPaginationData(pageToLoad: number) {
+    query && dispatch(fetchBooks({
       query: query.query,
       searchParameter: query.searchParameter,
       page: pageToLoad,
@@ -38,13 +39,13 @@ const BookList = ({ openModal }) => {
       {numPages > 1 &&
         <div>
           <PaginationButton
-            onClick={page > 1 ? (() => loadPaginationData(page - 1)) : undefined}
+            onClick={(page && page > 1) ? (() => loadPaginationData(page - 1)) : undefined}
           >
             &lt; <span className='hidden'>Previous page</span>
           </PaginationButton>
           <span className='num-pages'>Page {page} of {numPages}</span>
           <PaginationButton
-            onClick={page < numPages ? (() => loadPaginationData(page + 1)) : undefined}
+            onClick={(page && page < numPages) ? (() => loadPaginationData(page + 1)) : undefined}
           >
             <span className='hidden'>Next page</span> &gt;
           </PaginationButton>
@@ -63,9 +64,9 @@ const BookList = ({ openModal }) => {
   )
 }
 
-const PaginationButton = ({ onClick, children }) => {
+const PaginationButton: React.FC<PaginationButton> = ({ onClick, children }: PaginationButton) => {
   const className = 'btn ' + (onClick ? 'btn__primary' : 'btn__inactive')
-  const tabIndex = onClick ? '' : '-1'
+  const tabIndex = onClick ? undefined : -1
 
   return (
     <button
