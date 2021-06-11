@@ -36,6 +36,30 @@ export interface CoverProps {
 }
 
 /**
+ * LoadingIndicator component Props.
+ */
+export interface LoadingIndicatorProps {
+    color: string | undefined;
+}
+
+/**
+ * ModalView component Props.
+ */
+export interface ModalViewProps {
+    id: EntityId;
+    closeModal: () => void;
+    accessible: ElementRef;
+}
+
+/**
+ * BookDetails component Props.
+ */
+export interface BookDetailsProps {
+    book: Book;
+    elementToFocusRef: ElementRef;
+}
+
+/**
  * PaginationButton component Props.
  */
 export interface PaginationButton {
@@ -62,6 +86,8 @@ export interface Book {
     key: string;
     first_publish_year: number;
     cover_i: string;
+    isbn: string;
+    edition_count: number;
 }
 
 /**

@@ -1,6 +1,5 @@
-import type { Config } from '@jest/types'
-
-const config: Config.InitialOptions = {
+// eslint-disable-next-line no-undef
+module.exports = {
   testEnvironment: 'jsdom',
   preset: 'ts-jest/presets/js-with-ts',
   verbose: true,
@@ -16,5 +15,3 @@ const config: Config.InitialOptions = {
     '<rootDir>/src/tests/jestSetup.js'
   ]
 }
-
-export default config
