@@ -63,7 +63,13 @@ describe('REDUCER', () => {
       fetchHelper.states.fetchingState,
       fetchHelper.actions.fetchedAction
     )
-    expect(newState).toEqual(fetchHelper.states.fetchedState)
+
+    /* Somehow Redux with TypeScript messes up with ids order.
+      Need to sort it in order to pass deepEqual comparison. */
+    const fetchedState = Object.assign(fetchHelper.states.fetchedState)
+    fetchedState.ids = newState.ids.slice()
+
+    expect(newState).toEqual(fetchedState)
   })
 
   test('should handle books/fetchBooks/rejected', () => {
@@ -83,6 +89,11 @@ const appState = { books: fetchHelper.states.fetchedState }
 describe('SELECTORS', () => {
   test('selectAllBooks should return all books', () => {
     const allBooks = selectAllBooks(appState)
+
+    /* Somehow Redux with TypeScript messes up with ids and Books order.
+      Need to sort them in order to pass deepEqual comparison. */
+    allBooks.sort((book1, book2) => book1.id.localeCompare(book2.id))
+
     expect(allBooks).toEqual(Object.values(fetchHelper.states.fetchedState.entities))
   })
 
