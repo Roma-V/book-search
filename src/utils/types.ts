@@ -39,7 +39,7 @@ export interface CoverProps {
  * LoadingIndicator component Props.
  */
 export interface LoadingIndicatorProps {
-    color: string | undefined;
+    color?: string | undefined;
 }
 
 /**
@@ -72,8 +72,8 @@ export interface PaginationButton {
  */
 export interface SearchParameters {
     query: string,
-    searchParameter: string,
-    page: number
+    searchParameter?: string,
+    page?: number
 }
 
 /**

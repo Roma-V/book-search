@@ -6,15 +6,18 @@ import { useDebounce } from '../hooks/useDebounce'
 import openLibrary from '../services/openLibrary'
 import { fetchBooks } from '../store/booksSlice'
 
+import { RootState } from '../store/store'
+import { BooksState } from '../utils/types'
+
 import './SearchForm.css'
 
 const SearchForm = () => {
   const [input, setInput] = useState('')
-  const [query, cancelQuery] = useDebounce(input, 1000)
+  const [query, cancelQuery] = useDebounce(input, 1000) as [string, () => void]
   const [searchParameter, setSearchParameter] = useState(openLibrary.searchParameters[0])
 
   const dispatch = useDispatch()
-  const loadingState = useSelector(state => state.books.status)
+  const loadingState = useSelector<RootState, BooksState['status']>(state => state.books.status)
 
   useEffect(() => {
     if (query) {
@@ -22,18 +25,18 @@ const SearchForm = () => {
     }
   }, [query])
 
-  function handleInput(e) {
-    setInput(e.target.value)
+  function handleInput(e: { target: HTMLInputElement}) {
+    setInput(e.target?.value)
   }
 
-  function handleSelect(e) {
+  function handleSelect(e: { target: HTMLSelectElement}) {
     setSearchParameter(e.target.value)
     setInput('')
   }
 
   function handleSubmit() {
     if (loadingState !== 'loading') {
-      return function(e) {
+      return function(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
         cancelQuery()
@@ -42,13 +45,13 @@ const SearchForm = () => {
       }
     }
     else {
-      return function(e) {
+      return function(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
 
         cancelQuery()
 
         const cancelToken = openLibrary.getCancelTokenSource()
-        cancelToken.cancel('Loading canceled.')
+        cancelToken?.cancel('Loading canceled.')
       }
     }
   }

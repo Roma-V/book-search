@@ -2,25 +2,27 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { selectNumFound, setIdleStatus } from '../store/booksSlice'
+import { RootState } from '../store/store'
+import { BooksState } from '../utils/types'
 
 import './Notification.css'
 
-const Notification = () => {
-  const [timerId, setTimerId] = useState(null)
+const Notification: React.FC = () => {
+  const [timerId, setTimerId] = useState<number | null>(null)
   const dispatch = useDispatch()
 
-  const showing = useSelector(state => !['idle', 'loading'].includes(state.books.status))
-  const status = useSelector(state => state.books.status)
-  const error = useSelector(state => state.books.error)
+  const showing = useSelector<RootState, boolean>(state => !['idle', 'loading'].includes(state.books.status))
+  const status = useSelector<RootState, BooksState['status']>(state => state.books.status)
+  const error = useSelector<RootState, BooksState['error']>(state => state.books.error)
   const numFoundBooks = useSelector(selectNumFound)
 
   useEffect(() => {
     if (showing) {
-      if (timerId) clearTimeout(id)
+      if (timerId) clearTimeout(timerId)
 
       const id = setTimeout(() => {
         dispatch(setIdleStatus())
-      }, 5000)
+      }, 5000) as unknown as number
 
       setTimerId(id)
     }
