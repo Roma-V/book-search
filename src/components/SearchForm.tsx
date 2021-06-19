@@ -11,7 +11,7 @@ import { BooksState } from '../utils/types'
 
 import './SearchForm.css'
 
-const SearchForm = () => {
+const SearchForm: React.FC = () => {
   const [input, setInput] = useState('')
   const [query, cancelQuery] = useDebounce(input, 1000) as [string, () => void]
   const [searchParameter, setSearchParameter] = useState(openLibrary.searchParameters[0])

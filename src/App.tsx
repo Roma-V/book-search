@@ -10,7 +10,7 @@ import { ElementRef } from './utils/types'
 
 import './styles.css'
 
-const App = (): JSX.Element => {
+const App: React.FC = () => {
   const [showBookDetails, setShowBookDetails] = useState<string | null>(null)
   const [lastRef, setLastRef] = useState<ElementRef>(null)
 
